@@ -13,6 +13,8 @@ export enum GenerationMode {
   MANUAL = 'Write My Own'
 }
 
+export type AIProvider = 'gemini' | 'openrouter' | 'fallback';
+
 export interface ObjectionData {
   name: string;
   location: string;
@@ -27,4 +29,5 @@ export interface GeneratedEmail {
   subject: string;
   body: string;
   isOptimized?: boolean;
+  provider?: AIProvider;
 }

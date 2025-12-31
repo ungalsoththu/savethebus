@@ -4,6 +4,112 @@ import { ObjectionTone, Language } from './types';
 export const RECIPIENT_EMAIL = 'homesec@tn.gov.in';
 export const RECIPIENT_ADDRESS = 'Additional Chief Secretary to Government, Home Department, Secretariat, Chennai-600 009';
 
+// AI Provider Configuration
+export type AIProvider = 'gemini' | 'openrouter';
+
+export const AI_PROVIDERS: Record<AIProvider, { name: string; description: string }> = {
+  gemini: {
+    name: 'Google Gemini',
+    description: 'Direct Google Gemini API integration'
+  },
+  openrouter: {
+    name: 'OpenRouter',
+    description: 'OpenRouter API proxy with multiple model options'
+  }
+};
+
+// OpenRouter Model Configurations
+export const OPENROUTER_MODELS = [
+  {
+    id: 'google/gemini-2.0-flash-exp:free',
+    name: 'Gemini 2.0 Flash (Free)',
+    provider: 'openrouter',
+    description: 'Fast, efficient model for quick generation',
+    contextWindow: 1000000,
+    maxOutputTokens: 8192,
+    capabilities: ['text-generation', 'multilingual'],
+    recommended: true
+  },
+  {
+    id: 'google/gemini-2.0-flash-thinking-exp:free',
+    name: 'Gemini 2.0 Flash Thinking (Free)',
+    provider: 'openrouter',
+    description: 'Enhanced reasoning capabilities',
+    contextWindow: 1000000,
+    maxOutputTokens: 8192,
+    capabilities: ['text-generation', 'reasoning', 'multilingual'],
+    recommended: false
+  },
+  {
+    id: 'google/gemini-pro',
+    name: 'Gemini Pro',
+    provider: 'openrouter',
+    description: 'Balanced performance and quality',
+    contextWindow: 91728,
+    maxOutputTokens: 8192,
+    capabilities: ['text-generation', 'multilingual', 'code'],
+    recommended: false
+  },
+  {
+    id: 'anthropic/claude-3-haiku',
+    name: 'Claude 3 Haiku',
+    provider: 'openrouter',
+    description: 'Fast and efficient for simple tasks',
+    contextWindow: 200000,
+    maxOutputTokens: 4096,
+    capabilities: ['text-generation', 'multilingual'],
+    recommended: false
+  },
+  {
+    id: 'anthropic/claude-3.5-sonnet',
+    name: 'Claude 3.5 Sonnet',
+    provider: 'openrouter',
+    description: 'High quality with good performance',
+    contextWindow: 200000,
+    maxOutputTokens: 8192,
+    capabilities: ['text-generation', 'reasoning', 'multilingual'],
+    recommended: false
+  },
+  {
+    id: 'meta-llama/llama-3.1-8b-instruct:free',
+    name: 'Llama 3.1 8B (Free)',
+    provider: 'openrouter',
+    description: 'Open source model, good for general tasks',
+    contextWindow: 128000,
+    maxOutputTokens: 4096,
+    capabilities: ['text-generation', 'multilingual'],
+    recommended: false
+  },
+  {
+    id: 'mistralai/mistral-7b-instruct:free',
+    name: 'Mistral 7B (Free)',
+    provider: 'openrouter',
+    description: 'Efficient open source model',
+    contextWindow: 32768,
+    maxOutputTokens: 4096,
+    capabilities: ['text-generation', 'multilingual'],
+    recommended: false
+  }
+];
+
+// Default model configurations
+export const DEFAULT_GEMINI_MODEL = 'gemini-3-flash-preview';
+export const DEFAULT_OPENROUTER_MODEL = 'google/gemini-2.0-flash-exp:free';
+
+// Get recommended model for provider
+export const getRecommendedModel = (provider: AIProvider): string => {
+  if (provider === 'openrouter') {
+    const recommended = OPENROUTER_MODELS.find(m => m.recommended);
+    return recommended?.id || DEFAULT_OPENROUTER_MODEL;
+  }
+  return DEFAULT_GEMINI_MODEL;
+};
+
+// Get model by ID
+export const getModelById = (modelId: string) => {
+  return OPENROUTER_MODELS.find(m => m.id === modelId);
+};
+
 export const AMENDMENT_DETAILS = {
   rule: '288-A',
   notificationDate: '8th December 2025',
