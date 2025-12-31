@@ -1,0 +1,9 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/api/proxy/:path*",
+      "destination": "https://openrouter.ai/api/v1/:path*"
+    }
+  ]
+}
