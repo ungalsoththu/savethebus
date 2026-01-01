@@ -4,7 +4,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/proxy.ts": {
-      "runtime": "edge"
+      "runtime": "edge@1"
     }
   },
   "rewrites": [
