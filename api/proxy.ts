@@ -77,8 +77,8 @@ const DEFAULT_MAX_TOKENS = 2048;
 /**
  * Validates required environment variables
  */
-function validateEnvironment(): { valid: boolean; error?: string } {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+function validateEnvironment(env: any): { valid: boolean; error?: string } {
+  const apiKey = env.OPENROUTER_API_KEY;
   
   if (!apiKey) {
     return {
@@ -109,7 +109,7 @@ function sanitizeHeaders(headers: Headers): Headers {
 /**
  * Builds headers for the OpenRouter API request
  */
-function buildOpenRouterHeaders(originalHeaders: Headers): Headers {
+function buildOpenRouterHeaders(originalHeaders: Headers, env: any): Headers {
   const headers = new Headers();
   
   // Copy sanitized headers from original request
@@ -119,9 +119,9 @@ function buildOpenRouterHeaders(originalHeaders: Headers): Headers {
   });
   
   // Add OpenRouter-specific headers
-  headers.append('Authorization', `Bearer ${process.env.OPENROUTER_API_KEY}`);
-  headers.append('HTTP-Referer', process.env.OPENROUTER_SITE_URL || 'https://savethebus.vercel.app');
-  headers.append('X-Title', process.env.OPENROUTER_APP_NAME || 'SaveTheBus');
+  headers.append('Authorization', `Bearer ${env.OPENROUTER_API_KEY}`);
+  headers.append('HTTP-Referer', env.OPENROUTER_SITE_URL || 'https://savethebus.vercel.app');
+  headers.append('X-Title', env.OPENROUTER_APP_NAME || 'SaveTheBus');
   
   // Ensure content type is set
   if (!headers.has('Content-Type')) {
@@ -315,9 +315,9 @@ function handleGet(): Response {
 /**
  * Main handler for POST requests
  */
-async function handlePost(request: Request, pathname: string): Promise<Response> {
+async function handlePost(request: Request, pathname: string, env: any): Promise<Response> {
   // Validate environment
-  const envValidation = validateEnvironment();
+  const envValidation = validateEnvironment(env);
   if (!envValidation.valid) {
     return new Response(
       JSON.stringify({ error: envValidation.error }),
@@ -362,7 +362,7 @@ async function handlePost(request: Request, pathname: string): Promise<Response>
     };
     
     // Build headers for upstream request
-    const headers = buildOpenRouterHeaders(request.headers);
+    const headers = buildOpenRouterHeaders(env, request.headers);
     
     // Make request to OpenRouter API
     const response = await fetch(OPENROUTER_API_URL, {
@@ -470,7 +470,7 @@ export default {
     
     if (method === 'POST') {
       if (pathname === '/api/proxy/chat/completions') {
-        return handlePost(request, pathname);
+        return handlePost(request, pathname, env);
       }
       
       return new Response(
@@ -498,8 +498,4 @@ export default {
       }
     );
   }
-};
-
-export const config = {
-  runtime: 'edge',
 };
