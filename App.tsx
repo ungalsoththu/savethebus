@@ -304,12 +304,13 @@ const App: React.FC = () => {
               : 'பொதுப் போக்குவரத்து மக்களுக்குச் சொந்தமானது. விதி 288-A மற்றும் அதன் கொள்முதல் தவிர்ப்பு என்பது பொது உரிமையின் மீதான அத்துமீறல்.'}
           </p>
           <div className="flex justify-center gap-10 text-3xl">
-            <a href="https://github.com" target="_blank" className="hover:text-blue-400 transition-colors"><i className="fab fa-github"></i></a>
-            <a href="#" className="hover:text-blue-400 transition-colors"><i className="fas fa-fingerprint"></i></a>
+            <a href="https://github.com/UngalSoththu/savethebus" target="_blank" className="hover:text-blue-400 transition-colors"><i className="fab fa-github"></i></a>
+            <a href="#" className="hover:text-blue-400 transition-colors"><i className="fas fa-solid fa-bus-simple"></i></a>
             <a href="#" className="hover:text-blue-400 transition-colors"><i className="fas fa-universal-access"></i></a>
+            <a href="https://x.com/ungalsoththu" className="hover:text-blue-400 transition-colors"><i className="fas fa-brands fa-x-twitter"></i></a>
           </div>
           <div className="pt-10 border-t border-white/5 flex flex-col items-center gap-4">
-            <p className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-600">© 2025 Campaign Secretariat TN</p>
+            <p className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-600">🄯 - Ungal Soththu</p>
           </div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
