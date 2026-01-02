@@ -77,13 +77,35 @@ const DEFAULT_MAX_TOKENS = 2048;
 /**
  * Validates required environment variables
  */
-function validateEnvironment(env: any): { valid: boolean; error?: string } {
-  const apiKey = env.OPENROUTER_API_KEY;
-  
-  if (!apiKey) {
+interface EnvironmentVariables {
+  OPENROUTER_API_KEY?: string;
+  AI_PROVIDER?: string;
+  OPENROUTER_SITE_URL?: string;
+  OPENROUTER_APP_NAME?: string;
+}
+
+function validateEnvironment(env: EnvironmentVariables): { valid: boolean; error?: string } {
+  // Check for required environment variables
+  if (!env.OPENROUTER_API_KEY) {
     return {
       valid: false,
       error: 'OPENROUTER_API_KEY environment variable is not configured'
+    };
+  }
+  
+  // Validate that API key is not just an empty string
+  if (env.OPENROUTER_API_KEY.trim() === '') {
+    return {
+      valid: false,
+      error: 'OPENROUTER_API_KEY environment variable is empty'
+    };
+  }
+  
+  // Validate AI_PROVIDER if provided
+  if (env.AI_PROVIDER && !['openrouter', 'gemini'].includes(env.AI_PROVIDER)) {
+    return {
+      valid: false,
+      error: 'AI_PROVIDER environment variable must be either "openrouter" or "gemini"'
     };
   }
   
