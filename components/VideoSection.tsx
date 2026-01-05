@@ -89,24 +89,47 @@ const VideoSection: React.FC<VideoSectionProps> = ({
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-all"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center gap-4">
                 <div className="bg-red-600 text-white w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
                   <i className="fas fa-play text-3xl md:text-4xl ml-2"></i>
                 </div>
+                {/* Open in YouTube Button */}
+                <a
+                  href={`https://www.youtube.com/watch?v=${currentVideoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base shadow-lg transition-all flex items-center gap-2"
+                  aria-label="Open video in YouTube"
+                >
+                  <i className="fab fa-youtube"></i>
+                  <span>YouTube</span>
+                </a>
               </div>
             </button>
           ) : (
             // YouTube Iframe (Loaded on Click)
-            <iframe
-              ref={iframeRef}
-              src={`https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&modestbranding=1`}
-              title={currentTitle}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-              role="tabpanel"
-              aria-labelledby={`tab-${activeTab}`}
-            />
+            <>
+              <iframe
+                ref={iframeRef}
+                src={`https://www.youtube-nocookie.com/embed/${currentVideoId}?autoplay=1&rel=0&modestbranding=1&si=0&html5=1&playsinline=1`}
+                title={currentTitle}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full"
+                role="tabpanel"
+                aria-labelledby={`tab-${activeTab}`}
+              />
+              {/* Close button to stop video when watched */}
+              <button
+                onClick={() => setIsPlaying(false)}
+                className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/70 hover:bg-black/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all z-10"
+                aria-label="Close video player"
+                title="Close video"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </>
           )}
         </div>
       </div>
