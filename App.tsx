@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import ObjectionForm from './components/ObjectionForm';
 import EmailResult from './components/EmailResult';
+import VideoSection from './components/VideoSection';
 import { GeneratedEmail, Language } from './types';
 import { AMENDMENT_DETAILS, RECIPIENT_ADDRESS, TRANSLATIONS } from './constants';
 
@@ -200,6 +201,16 @@ const App: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           <div className="lg:col-span-8 space-y-10">
+            {/* Video Section */}
+            <VideoSection 
+              englishVideoId="3tbC05uO8aI" 
+              tamilVideoId="iYOn8jazkvg"
+              titleText={{
+                english: 'Save the Bus Campaign - English Version',
+                tamil: 'பேருந்தைக் காப்போம் பிரச்சாரம் - தமிழ் பதிப்பு'
+              }}
+            />
+            
             {view === 'action' ? (
               <div className="space-y-10">
                 {!generatedEmail ? (
